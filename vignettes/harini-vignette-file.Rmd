@@ -1,6 +1,7 @@
 ---
-title: "harini-vignette-file"
-output: rmarkdown::html_vignette
+output: 
+  bookdown::html_document2:
+    base_format: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{harini-vignette-file}
   %\VignetteEngine{knitr::rmarkdown}
@@ -17,3 +18,28 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(mysimplecompendium)
 ```
+## External R code from vignette file 
+
+```{r include=TRUE}
+library(here)
+knitr::opts_chunk$set(echo = TRUE)
+knitr::read_chunk(here("vignettes/Statistics_file.R"))
+```
+```{r variables, echo=TRUE, eval=TRUE, results=TRUE, cache=TRUE}
+ ## Chunk one
+```
+
+```{r plot, eval=TRUE, results=TRUE}
+## Chunk two
+```
+```{r starwars-gender-plot, fig.cap="Gender of Starwars characters"}
+
+library(tidyverse)
+starwars%>%
+mutate(gender_fct=fct_infreq(gender)) %>%
+ggplot(aes(gender_fct)) +
+geom_bar()+
+xlab("")+
+theme_minimal(base_size=14)
+```
+In Figure \@ref(fig:starwars-gender-plot) we can see an mbalance in gender ratios in Starwars. 
